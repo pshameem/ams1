@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title_html %}Manage | Admin{% endblock %}
+{% block article_content %}
+<div id="index">
+    <!-- Index starts here -->
+    <div class="container main">
+        <div class="row home" align="center">
+            <div id="index_left" class="col-md-6 left">
+                <img class="img-responsive img-rabbit" src="{% static 'assets/images/ksb2.jpg' %}">
+            </div>
+            <div id="index_right" class="col-md-6 text-center right">
+                <div class="logo">
+                    <img src="{% static 'assets/images/enb.jpg' %}">
+                    <h4>e-ASSISTANT</h4>
+                </div>
+                <p class="home-description">
+                    AUTOMATIC ATTENDENCE SYSTEM
+                </p>
+
+                <div class="btn-group-vertical custom_btn animated slideinright" align="center">
+                    <a href="manage/student" class="btn btn-rabbit"> Manage Student </a>
+                    <a href="manage/teacher" class="btn btn-rabbit"> Manage Teacher </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div> <!-- index ends here -->
+{% endblock %}

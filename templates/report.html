@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title_html %}Monthly Report | E-Assistant{% endblock %}
+{% block article_content %}
+<div id="report" class="pages">
+  <!-- Contact starts here -->
+  <div class="container main">
+    <div class="row" align="center">
+      <div id="watermark">
+        <h2 class="page-title" text-center> Monthly Report</h2>
+        <div class="marker">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
+      </div>
+      <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+          {{form.batch}}
+        </div>
+        <div class="form-group">
+          {{form.month}}
+        </div>
+        <div class="form-group">
+          {{form.year}}
+        </div>
+        <button type="submit" class="btn btn-rabbit submit">Submit</button>
+        <button onclick="location.href='/admin_panel'" type="reset" class="btn btn-rabbit">Back to home</button>
+        <br>
+        <span class="error">
+        {% for e,err in form.errors.items %}
+        {{err}}
+        {% endfor %}
+        </span>
+        {% if report_error %}
+        <span class="error">There is no attendence data</span>
+        {% endif %}
+        <!-- previewww    monthly report in a box and export option -->
+      </form>
+
+    </div>
+    {% if attendences %}
+    <div align="center">
+      <table>
+        <tr>
+          <th>Admission No</th>
+          <th>Name</th>
+          <th>Total Attendnece</th>
+          <th>Current Attendence</th>
+          <th>Absence</th>
+        </tr>
+        {% for a in attendences %}
+        <tr>
+          <td>{{a.student_id.admission_no}}</td>
+          <td>{{a.student_id.name}}</td>
+          <td>{{a.total}}</td>
+          <td>{{a.present}}</td>
+          <td>{{a.absence}}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+    {% comment %} <div align="center">
+      <table>
+        <tr>
+          <th>Admission No</th>
+          <th>Name</th>
+          <th>Total Attendnece</th>
+          <th>Current Attendence</th>
+          <th>Absence</th>
+        </tr>
+        {% for s in students %}
+        <tr>
+          <td>{{s.name}}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div> {% endcomment %}
+    {% endif %}
+  </div>
+</div> 
+{% endblock %}

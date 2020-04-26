@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title_html %}Attendence | E-Assitant{% endblock %}
+{% block article_content %}
+<div id="report" class="pages">
+  <!-- Contact starts here -->
+  <div class="container main">
+    <div class="row" align="center">
+      <div id="watermark">
+        <h2 class="page-title" text-center>Report</h2>
+        <div class="marker">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
+      </div>
+
+      <table border="1" align="center" width="50%">
+        <tr>
+          <th>Student Id</th>
+          <th>Student Admission No</th>
+          <th>Student Name</th>
+          <th>Student Status</th>
+          <th>Change Status</th>
+        </tr>
+        {% for att in attendences %}
+        <tr>
+          <td>{{att.id}}</td>
+          <td>{{att.student_id.admission_no}}</td>
+          <td>{{att.student_id.name}}</td>
+          <td>{% if att.status %}Present{% else %}Absent{% endif %}</td>
+          <td>
+            <a href="{% url 'teacher_panel:today_attendence' %}?aid={{att.id}}">Change</label>
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+      <br>
+      <button onclick="location.href='/teacher_panel'" type="reset" class="btn btn-rabbit">Back to home</button>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title_html %}Update | Teacher{% endblock %}
+{% block article_content %}
+
+<div id="addteach" class="pages">
+    <!-- Contact starts here -->
+    <div class="container main">
+        <div class="row">
+            <div id="watermark" align="center">
+                <h2 class="page-title" text-center>Update Teacher</h2>
+                <div class="marker">&nbsp&nbsp&nbsp</div>
+            </div>
+            <!-- form -->
+            <form class="form_edit" align="center" method="POST">
+                {% csrf_token %}
+                <div class="form-group" align="center">
+                    <input type="text" name="name" class="form-control" id="name" placeholder="Teacher Name"
+                        value="{{teacher.name}}"> <!-- type matannam -->
+                </div>
+                <div class="form-group" align="center">
+                    <input type="text" name="username" class="form-control" id="name" placeholder="User Name"
+                        value="{{teacher.fk_login.username}}" disabled> <!-- type matannam -->
+                </div>
+                <div class="form-group" align="center">
+                    <input type="password" name="password" class="form-control" id="pwd" placeholder="Password">
+                </div>
+                <input type="hidden" name="teacher" value="{{teacher.id}}">
+                <div class="form-group" align="center">
+                    <input type="password" name="cpassword" class="form-control" id="pwd"
+                        placeholder="Confirm Password">
+                    {{teacher.Teacher_subject_set}}
+                    {% if error_cpassword %}
+                    <span class="error">{{ error_cpassword }}</span>
+                    {% endif %}
+                </div>
+                <br>
+
+                <button type="submit" class="btn btn-rabbit submit">Update</button>
+            </form>
+            <div align="center">
+                <form name="subject_add_form" method="POST" action="/admin_panel/update/teacher_subject">
+                    <div class="form-group">
+                        {% csrf_token %}
+                        <select class="form-control" name="subject">
+                            <option selected disabled>Select Subject</option>
+                            {% for s in subjects_all %}
+                            {% for sub in subjects%}
+                            {% if s != sub.subject %}
+                            <option value="{{s.id}}">{{s.name}}</option>
+                            {% endif %}
+                            {% endfor %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <input type="hidden" name="teacher" value="{{teacher.id}}">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-rabbit submit">Allot Subject</button>
+                    </div>
+                </form>
+                <table>
+                    <tr>
+                        <th>Semester</th>
+                        <th>Subject</th>
+                        <th>Select</th>
+                    </tr>
+                    {% for subject in subjects %}
+                    <tr>
+                        <td>{{subject.subject.sem}}</td>
+                        <td>{{subject.subject.name}}</td>
+                        <td><a
+                                href="{% url 'admin_panel:remove_alloted' %}?teacher={{subject.teacher_id}}&sid={{subject.id}}">Remove</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% if error_subject %}
+                <span>{{ error_subject }}</span>
+                {% endif %}
+                <br>
+                <button onclick="location.href='/admin_panel'" type="reset" class="btn btn-rabbit">Back to home</button>
+            </div>
+            <br>
+
+
+        </div>
+    </div>
+</div>
+
+
+</div> <!-- Contact ends here -->
+{% if success %}
+<script>
+    alert("{{success}}");
+    location.href = "/admin_panel";
+</script>
+{% endif %}
+{% endblock %}

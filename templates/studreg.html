@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title_html %}Add Student : Admin{% endblock %}
+{% block article_content %}
+<div id="studreg" class="pages">
+    <!-- Contact starts here -->
+    <div class="container main">
+        <div class="row">
+
+            <div id="watermark" align="center">
+                <h2 class="page-title" text-center>Student Registration</h2>
+                <div class="marker" align="center">&nbsp&nbsp&nbsp&nbsp&nbsp</div>
+            </div>
+            <!-- form -->
+            <form class="form_edit" align="center" method="POST" action="../add/student">
+                {% csrf_token %}
+                <div class="form-group" align="center">
+                    {{form.admission_no}}
+                </div>
+                <div class="form-group" align="center">
+                    {{form.name}}
+                </div>
+                <div class="form-group" align="center">
+                    {{form.batch_id}}
+                </div>
+
+                <div class="form-group" align="center">
+                    {{form.dob}}
+                </div>
+                <div class="form-group" align="center">
+                    {{form.parent_name}}
+                </div>
+
+                <div class="form-group" align="center">
+                    {{form.parent_no}}
+                </div>
+                <button type="submit" class="btn btn-rabbit submit">Register</button>
+                <button onclick="location.href='/admin_panel'" type="reset" class="btn btn-rabbit">Back to
+                    home</button>
+                <span class="error">
+                    {% for e,err in form.errors.items %}
+                    {{err}}
+                    {% endfor %}
+                </span>
+
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+  $(function () {
+    $( "#datepicker" ).datepicker();
+  });
+</script>
+{% endblock %}

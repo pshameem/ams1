@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title_html %}Manage Teacher | Admin{% endblock %}
+{% block article_content %}
+<div id="mngteach" class="pages">
+    <!-- Contact starts here -->
+    <div class="container main">
+        <div class="row">
+            <div id="watermark" align="center">
+                <h2 class="page-title" text-center> Teacher</h2>
+                <div class="marker">&nbsp&nbsp&nbsp</div>
+            </div></br>
+            <form class="form_edit" align="center">
+                <div class="form-group" align="center">
+
+                    <table>
+                        <tr>
+                            <th>Teacher ID</th>
+                            <th>Name</th>
+                            <th>Updation</th>
+                        </tr>
+                        {% for teacher in teachers %}
+                        <tr>
+                            <td>{{teacher.id}}</td>
+                            <td>{{teacher.name}}</td>
+                            <td><a
+                                    href="{% url 'admin_panel:update_teacher'%}?teacher={{teacher.id}}"><u>Update</u></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    <br>
+                    <button onclick="location.href='/admin_panel'" type="reset" class="btn btn-rabbit">Back to
+                        home</button>
+                    <!-- boxx with all subject checbox and submit -->
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

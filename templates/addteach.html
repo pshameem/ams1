@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title_html %}Add Teacher | Admin{% endblock %}
+   {% block article_content %}
+    <div id="addteach" class="pages">
+        <!-- Contact starts here -->
+        <div class="container main">
+            <div class="row">
+                <div id="watermark" align="center">
+                    <h2 class="page-title" text-center>Add Teacher</h2>
+                    <div class="marker">&nbsp&nbsp&nbsp</div>
+                </div>
+                <!-- form -->
+                <form class="form_edit" align="center" method="POST" action="../add/teacher">
+                    {% csrf_token %}
+                    <div class="form-group" align="center">
+                        {{form.name}}
+                    </div>
+                    <div class="form-group" align="center">
+                        {{form.username}}
+                    </div>
+                    <div class="form-group" align="center">
+                        {{form.password}}
+                    </div>
+                    <div class="form-group" align="center">
+                        {{form.cpassword}}
+                    </div>
+                   
+                       <div align="center">
+                        <table>
+                            <tr>
+                                <th>Semester</th>
+                                <th>Subject</th>
+                                <th>Select</th>
+                            </tr>
+                            {% for subject in subjects %}
+                            <tr>
+                                <td>{{subject.sem}}</td>
+                                <td>{{subject.name}}</td>
+                                <td><input type="checkbox" name="_subject{{subject.id}}" value="{{subject.id}}"></td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                       </div>
+                        
+                    
+                    <br>
+                    <button type="submit" class="btn btn-rabbit submit">Register</button>
+                    <button onclick="location.href='/admin_panel'" type="reset" class="btn btn-rabbit">Back to home</button>
+                    <br>
+                        <span class="error">
+                            {% for e,err in form.errors.items %}
+                                {{err}}
+                            {% endfor %}
+                        </span>
+                        {% if error_subject %}
+                        <span class="error">{{ error_subject }}</span><br>
+                        {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+    {% if success %}
+    <script>
+        alert("{{success}}");
+        location.href="/admin_panel";
+    </script>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title_html %}Snap | E-Assistant{% endblock %}
+{% block article_content %}
+<div id="batch" class="pages">
+    <!-- Contact starts here -->
+    <div class="container main">
+        <div class="row" align="center">
+            <div id="watermark">
+                <h2 class="page-title" text-center>Take Snap</h2>
+                <div class="marker">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
+            </div>
+
+            <!-- form -->
+            <form class="form_edit" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{form.batch}}
+                </div>
+                <div class="form-group">
+                    {{form.subject}}
+                </div>
+                <div>
+                    {% if not success %}
+                    {{message}}
+                    {% endif %}
+                </div>
+                <button type="submit" class="btn btn-rabbit submit">Take</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+    $.ajax({
+            headers:{
+            'X-CSRFToken':document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            type: 'POST',
+            url: '{% url 'teacher_panel:get_subjects_for_teacher' %}',
+            dataType:'json',
+            success: function (response) {
+                data = response;
+                let options = '<option value="">Select Subject</option>'
+                options += data.map(subject=>`<option value=${subject.pk}>${subject.fields.name}</option>`).join('\n')
+                $('#subject').html(options);
+            },
+            error: function () {alert('Couldn\'t load subject');}
+        });        
+})
+</script>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title_html %}Manage Student | Admin{% endblock %}
+{% block article_content %}
+<div id="mngstd" class="pages">
+    <!-- Contact starts here -->
+    <div class="container main">
+        <div class="row" align="center">
+            <div id="watermark">
+                <h2 class="page-title" text-center>Students</h2>
+                <div class="marker">&nbsp&nbsp&nbsp&nbsp&nbsp</div>
+            </div>
+            <!-- form -->
+            <form class="form_edit" method="POST">
+                <div class="form-group">
+                    {% csrf_token %}
+                    {{form.batch}}
+                </div>
+                <button type="submit" class="btn btn-rabbit submit">Submit</button>
+                <button onclick="location.href='/admin_panel'" type="reset" class="btn btn-rabbit">Back to home</button>
+                </br>
+                <div class="form-group">
+                    {% if not form.errors %}
+                    {% if students %}
+                    <table>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Name</th>
+                            <th>Enable/Disable</th>
+                            <th>Status</th>
+                        </tr>
+                        {% for student in students %}
+                        <tr>
+                            <td>{{student.id}}</td>
+                            <td>{{student.name}}</td>
+                            <td><a onclick="javascript:enable_disable({{ student.id }},'{% url 'admin_panel:enable_disable_student' %}');" ><u>enable|disable</u></a>
+                            </td>
+                            <td id="student_{{student.id}}">
+                                {% if student.status %}
+                                Enabled
+                                {% else %}
+                                Disabled
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    {% endif %}
+                    {% else %}
+                    <span class="error">
+                        {% for e,err in form.errors.items %}
+                        {{err}}
+                        {% endfor %}
+                    </span>
+                    {% endif %}</div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+function enable_disable(id,url){
+    $.ajax({
+        headers:{
+        'X-CSRFToken':document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        type: 'POST',
+        url: url,
+        data: {id: id},
+        dataType:'json',
+        success: student_status_changed,
+        error: function () {alert('Couldn\'t update status');}
+    });
+}
+function student_status_changed(response) {
+    $('#student_'+response.id).html(response.status?'Enabled':'Disabled')
+    alert(response.message);
+}
+</script>
+{% endblock %}

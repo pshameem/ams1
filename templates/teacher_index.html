@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title_html %}Teacher | E-Assistant{% endblock %}
+{% block article_content %}
+<div id="index">
+    <!-- Index starts here -->
+    <div class="container main">
+        <div class="row home" align="center">
+            <div id="index_left" class="col-md-6 left">
+                <img class="img-responsive img-rabbit" src="{% static 'assets/images/1.png' %}">
+            </div>
+            <div id="index_right" class="col-md-6 text-center right">
+                <div class="logo">
+                    <img src="{% static 'assets/images/enb.jpg' %}">
+                    <h4>e-ASSISTANT</h4>
+                </div>
+                <p class="home-description">
+                    AUTOMATIC ATTENDENCE SYSTEM
+                </p>
+                <div class="btn-group-vertical custom_btn animated slideinright" align="center">
+                    <!-- <a href="add/student" class="btn btn-rabbit">  Student Registration </a>
+                        <a href="manage/student" class="btn btn-rabbit"> Manage Student </a>  -->
+                    <a href="snap" class="btn btn-rabbit"> Take Snap </a>
+                    <a href="../logout" class="btn btn-rabbit"> Logout </a>
+                </div>
+
+            </div>
+        </div>
+    </div> <!-- index ends here -->
+</div>
+{% endblock %}

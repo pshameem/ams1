@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title_html %}Register | Admin{% endblock %}
+{% block article_content %}
+<div id="index">
+    <!-- Index starts here -->
+    <div class="container main">
+        <div class="row home" align="center">
+            <div id="index_left" class="col-md-6 left">
+                <img class="img-responsive img-rabbit" src="{% static 'assets/images/ksb1.jpg' %}">
+            </div>
+            <div id="index_right" class="col-md-6 text-center right">
+                <div class="logo">
+                    <img src="{% static 'assets/images/enb.jpg' %}">
+                    <h4>e-ASSISTANT</h4>
+                </div>
+                <p class="home-description">
+                    AUTOMATIC ATTENDENCE SYSTEM
+                </p>
+                <div class="btn-group-vertical custom_btn animated slideinright" align="center">
+                    <a href="add/student" class="btn btn-rabbit"> Add Student </a>
+                    <a href="add/teacher" class="btn btn-rabbit back"> Add Teacher </a>
+                    <a href="add/batch" class="btn btn-rabbit back"> Add Batch </a>
+                    <a href="./add/subject" class="btn btn-rabbit back"> Add Subject </a>
+                    <button onclick="location.href='/admin_panel'" type="reset" class="btn btn-rabbit">Back to
+                        home</button>
+                </div>
+
+            </div>
+        </div>
+    </div> <!-- index ends here -->
+</div>
+{% endblock %}

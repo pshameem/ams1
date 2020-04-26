@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title_html %}Admin | Home{% endblock %}
+{% block article_content %}
+
+<div id="mngstd" class="pages">
+    <!-- Contact starts here -->
+    <div class="container main">
+        <div class="row" align="center">
+            <div id="watermark">
+                <h2 class="page-title" text-center>Upload Dataset</h2>
+                <div class="marker">&nbsp&nbsp&nbsp&nbsp&nbsp</div>
+            </div>
+            <!-- form -->
+            <form class="form_edit" method="POST">
+                <div class="form-group">
+                    {% csrf_token %}
+                    {{form.batch}}
+                </div>
+                <div class="form-group">
+                    {{form.student}}
+                </div>
+                <button type="submit" class="btn btn-rabbit submit">Upload</button>
+                <button onclick="location.href='/admin_panel'" type="reset" class="btn btn-rabbit">Back to home</button>
+                <br>
+                <span class="error">
+                    {% for e,err in form.errors.items %}
+                    {{err}}
+                    {% endfor %}
+                </span>
+            </form>
+
+        </div>
+    </div>
+</div>
+{% if success %}
+    <script>
+    alert("{{success}}");
+    </script>
+{% endif %}
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#batch').val("");
+    let options = '<option value="">Select Student</option>'        
+    $('#students').html(options);
+})
+
+$('#batch').change(function(){
+    loadStudents($(this).children("option:selected").val())
+})
+function loadStudents(id){
+   if(id!=''){
+        $.ajax({
+            headers:{
+            'X-CSRFToken':document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            type: 'POST',
+            url: '{% url 'admin_panel:get_students_with_batch' %}',
+            data: {id: id},
+            dataType:'json',
+            success: function (response) {
+                console.log(JSON.parse(response))
+                data = JSON.parse(response)
+                let options = '<option value="">Select Student</option>'
+                options += data.map(student=>`<option value=${student.pk}>${student.fields.admission_no} - ${student.fields.name}</option>`).join('\n')
+                $('#students').html(options);
+            },
+            error: function () {alert('Couldn\'t update status');}
+        }); 
+   }else{
+       alert("Oops! please select a valid option")
+   }
+}
+
+</script>
+{% endblock %}

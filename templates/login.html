@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title_html %}
+ E-Assistant : Login
+{% endblock %}
+{% block article_content %}
+<div id="login" class="pages">                             <!-- Contact starts here -->
+    <div class="container main">
+        <div class="row" align="center">
+            <div class="logo">
+                <img src="{% static 'assets/images/enb.jpg' %}">
+                <h4>e-ASSISTANT</h4>
+            </div>
+            <p class="home-description">
+                AUTOMATIC ATTENDENCE SYSTEM
+            </p>
+         <div id="watermark">
+                    <h2 class="page-title" align="center">LogIn</h2>
+                    <div class="marker">&nbsp&nbsp&nbsp&nbsp&nbsp</div>
+                </div>
+
+                <!-- form -->
+                <form class="form_edit" action="" method="POST" > 
+                    {% csrf_token %}
+                    
+                    <div class="form-group" align="center">
+                        {{form.name}}
+                    </div>
+                    <div class="form-group">
+                        {{form.pwd}}    
+                    </div>
+                    <button type="submit" class="btn btn-rabbit submit" >LogIn</button>
+                </br>
+                <span class="error">{{form.non_field_errors}}
+                    {{error_message}}
+                    {{form.name.errors}}
+                    {{form.pwd.errors}}</span>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>      
+{% endblock %}
